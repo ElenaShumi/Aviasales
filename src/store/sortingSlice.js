@@ -11,11 +11,11 @@ const sortingSlice = createSlice({
     },
   },
   selectors: {
-    selectSorting: (state) => state.sorting,
+    selectorSorting: (state) => state.sorting,
   },
 })
 
 export const { toggleSorting } = sortingSlice.actions
 
-export const { selectSorting } = sortingSlice.selectors
+export const { selectorSorting } = sortingSlice.selectors
 export default sortingSlice.reducer

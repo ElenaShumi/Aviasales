@@ -4,12 +4,12 @@ import React from 'react'
 
 import styles from './ticket.module.scss'
 
-export default function Ticket() {
+export default function Ticket({ ticket }) {
   return (
     <li className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.price}>13 400 P</div>
-        <img className={styles.logo} src="../../img/logo.png" alt="airlines" />
+        <div className={styles.price}>ticket.price</div>
+        <img className={styles.logo} src={`https://pics.avs.io/99/36/${ticket.carrier}.png`} alt="airlines" />
       </div>
       <div className={styles.info}>
         <div className={styles.route}>

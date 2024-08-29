@@ -1,14 +1,14 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { toggleSorting, selectSorting } from '../../store/sortingSlice'
+import { toggleSorting, selectorSorting } from '../../store/sortingSlice'
 // import PropTypes from 'prop-types'
 
 import './ticketTabs.scss'
 
 export default function TicketTabs() {
   const dispatch = useDispatch()
-  const sorting = useSelector(selectSorting)
+  const sorting = useSelector(selectorSorting)
 
   return (
     <div className="tabs_wrap">
