@@ -10,4 +10,10 @@ export default configureStore({
     filter: filterSlice,
     tickets: ticketsSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+    }),
+  // devTools: process.env.NODE_ENV !== 'production',
 })

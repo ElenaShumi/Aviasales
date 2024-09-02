@@ -4,11 +4,6 @@ const createSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
 })
 
-const setError = (state, action) => {
-  state.status = 'rejected'
-  state.error = action.payload
-}
-
 const ticketsSlice = createSlice({
   name: 'tickets',
 
@@ -20,6 +15,10 @@ const ticketsSlice = createSlice({
   },
 
   reducers: (create) => ({
+    stopLoading: create.reducer((state) => {
+      state.status = 'resolved'
+    }),
+
     fetchSearchId: create.asyncThunk(
       async function (_, { rejectWithValue, dispatch }) {
         try {
@@ -40,23 +39,31 @@ const ticketsSlice = createSlice({
         fulfilled: (state, action) => {
           state.searchId = action.payload
         },
-        rejected: setError,
       }
     ),
 
     fetchTickets: create.asyncThunk(
-      async function (id, { rejectWithValue }) {
+      async function (id, { dispatch }) {
+        const arr = []
         try {
           const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${id}`)
-          if (!response.ok) {
+
+          if (response.status === 500) {
             throw new Error('No tickets found. Server Error!')
           }
-          const data = await response.json()
 
-          return data.tickets
+          const data = await response.json()
+          arr.push(...data.tickets)
+          if (!data.stop) {
+            arr.push(...dispatch(fetchTickets(id)))
+          } else if (data.stop) {
+            dispatch(stopLoading())
+          }
         } catch (error) {
-          return rejectWithValue(error.message)
+          if (error.name === 'Error') arr.push(...dispatch(fetchTickets(id)))
         }
+
+        return arr
       },
       {
         pending: (state) => {
@@ -64,10 +71,8 @@ const ticketsSlice = createSlice({
           state.error = null
         },
         fulfilled: (state, action) => {
-          state.status = 'resolved'
-          state.tickets = action.payload
+          state.tickets.push(...action.payload)
         },
-        rejected: setError,
       }
     ),
   }),
@@ -75,11 +80,12 @@ const ticketsSlice = createSlice({
   selectors: {
     selectorTickets: (state) => state.tickets,
     selectorId: (state) => state.searchId,
+    selectorStatus: (state) => state.status,
   },
 })
 
-export const { fetchSearchId, fetchTickets } = ticketsSlice.actions
+export const { fetchSearchId, fetchTickets, stopLoading } = ticketsSlice.actions
 
-export const { selectorTickets, selectorId } = ticketsSlice.selectors
+export const { selectorTickets, selectorId, selectorStatus } = ticketsSlice.selectors
 
 export default ticketsSlice.reducer
