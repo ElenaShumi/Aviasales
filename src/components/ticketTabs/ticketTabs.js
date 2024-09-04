@@ -1,25 +1,42 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { toggleSorting, selectorSorting } from '../../store/sortingSlice'
+import { selectorTickets, sorting } from '../../store/ticketsSlice'
+
 // import PropTypes from 'prop-types'
 
 import './ticketTabs.scss'
 
 export default function TicketTabs() {
   const dispatch = useDispatch()
-  const sorting = useSelector(selectorSorting)
+  const tickets = useSelector(selectorTickets)
+  const sort = useSelector(selectorSorting)
+  let lengthTickets = tickets.length
+
+  useEffect(() => {
+    dispatch(sorting(sort))
+  }, [sort, lengthTickets])
 
   return (
     <div className="tabs_wrap">
       <ul>
         <li
-          className={sorting === 'cheap' ? 'active' : null}
-          onClick={() => dispatch(toggleSorting({ name: 'cheap' }))}
+          className={sort === 'cheap' ? 'active' : null}
+          onClick={() => {
+            dispatch(toggleSorting({ name: 'cheap' }))
+            // dispatch(sorting(sort))
+          }}
         >
           Самый дешевый
         </li>
-        <li className={sorting === 'fast' ? 'active' : null} onClick={() => dispatch(toggleSorting({ name: 'fast' }))}>
+        <li
+          className={sort === 'fast' ? 'active' : null}
+          onClick={() => {
+            dispatch(toggleSorting({ name: 'fast' }))
+            // dispatch(sorting(sort))
+          }}
+        >
           Самый быстрый
         </li>
       </ul>

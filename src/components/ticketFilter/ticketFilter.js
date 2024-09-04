@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // import PropTypes from 'prop-types'
 
-import { toggleFilter, selectorFilter } from '../../store/filterSlice'
+import { toggleFilter, selectorFilter, allFilter } from '../../store/filterSlice'
 
 import styles from './ticketFilter.module.scss'
 
@@ -16,16 +16,13 @@ export default function TicketFilter() {
 
   const filtering = (item) => {
     if (item === 'all') {
-      for (let i = 0; i < name.length; i++) {
-        dispatch(toggleFilter(name[i]))
-      }
+      dispatch(allFilter(!all))
     }
-
     return dispatch(toggleFilter(item))
   }
 
   useEffect(() => {
-    if (withoutTransfers && oneTransfers && twoTransfers && threeTransfers) {
+    if (withoutTransfers && oneTransfers && twoTransfers && threeTransfers && !all) {
       dispatch(toggleFilter(name[0]))
     } else if ((!withoutTransfers || !oneTransfers || !twoTransfers || !threeTransfers) && all) {
       dispatch(toggleFilter(name[0]))

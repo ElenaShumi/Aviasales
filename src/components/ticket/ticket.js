@@ -37,7 +37,9 @@ export default function Ticket({ ticket }) {
   return (
     <li className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.price}>{`${Math.floor(ticket.price / 1000)}  ${ticket.price % 1000} Р`}</div>
+        <div
+          className={styles.price}
+        >{`${Math.floor(ticket.price / 1000)}  ${ticket.price % 1000 < 100 ? '0' + (ticket.price % 1000) : ticket.price % 1000} Р`}</div>
         <img className={styles.logo} src={`https://pics.avs.io/99/36/${ticket.carrier}.png`} alt="airlines" />
       </div>
       {segments}

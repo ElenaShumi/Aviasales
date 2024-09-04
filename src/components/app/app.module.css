@@ -14,3 +14,15 @@
     display: flex;
     justify-content: center;
 }
+
+@media (max-width: 767px) {
+    .container_main {
+        flex-direction: column;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .container_logo {
+        margin: 30px auto;
+    }
+}

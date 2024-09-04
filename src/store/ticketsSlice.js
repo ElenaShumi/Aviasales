@@ -19,6 +19,29 @@ const ticketsSlice = createSlice({
       state.status = 'resolved'
     }),
 
+    sorting: create.reducer((state, action) => {
+      const arr = [...state.tickets]
+
+      if (action.payload === 'cheap') {
+        state.tickets = arr.sort((prevTicket, nextTicket) => prevTicket.price - nextTicket.price)
+      } else if (action.payload === 'fast') {
+        state.tickets = arr.sort((prevTicket, nextTicket) => {
+          let minFirst
+          let minTwo
+
+          if (prevTicket.segments[0].duration < prevTicket.segments[1].duration) {
+            minFirst = prevTicket.segments[0].duration
+          } else minFirst = prevTicket.segments[1].duration
+
+          if (nextTicket.segments[0].duration < nextTicket.segments[1].duration) {
+            minTwo = nextTicket.segments[0].duration
+          } else minTwo = nextTicket.segments[1].duration
+
+          return minFirst - minTwo
+        })
+      }
+    }),
+
     fetchSearchId: create.asyncThunk(
       async function (_, { rejectWithValue, dispatch }) {
         try {
@@ -72,6 +95,7 @@ const ticketsSlice = createSlice({
         },
         fulfilled: (state, action) => {
           state.tickets.push(...action.payload)
+          // sortingCheap(state.tickets)
         },
       }
     ),
@@ -84,7 +108,7 @@ const ticketsSlice = createSlice({
   },
 })
 
-export const { fetchSearchId, fetchTickets, stopLoading } = ticketsSlice.actions
+export const { fetchSearchId, fetchTickets, stopLoading, sorting } = ticketsSlice.actions
 
 export const { selectorTickets, selectorId, selectorStatus } = ticketsSlice.selectors
 

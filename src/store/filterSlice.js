@@ -3,11 +3,30 @@ import { createSlice } from '@reduxjs/toolkit'
 const filterSlice = createSlice({
   name: 'filter',
   initialState: {
-    filter: { all: false, withoutTransfers: false, oneTransfers: false, twoTransfers: false, threeTransfers: false },
+    filter: { all: true, withoutTransfers: true, oneTransfers: true, twoTransfers: true, threeTransfers: true },
   },
   reducers: {
     toggleFilter(state, action) {
       state.filter[action.payload] = !state.filter[action.payload]
+    },
+    allFilter(state, action) {
+      if (action.payload) {
+        state.filter = {
+          all: true,
+          withoutTransfers: true,
+          oneTransfers: true,
+          twoTransfers: true,
+          threeTransfers: true,
+        }
+      } else {
+        state.filter = {
+          all: false,
+          withoutTransfers: false,
+          oneTransfers: false,
+          twoTransfers: false,
+          threeTransfers: false,
+        }
+      }
     },
   },
   selectors: {
@@ -15,7 +34,7 @@ const filterSlice = createSlice({
   },
 })
 
-export const { toggleFilter } = filterSlice.actions
+export const { toggleFilter, allFilter } = filterSlice.actions
 
 export const { selectorFilter } = filterSlice.selectors
 
