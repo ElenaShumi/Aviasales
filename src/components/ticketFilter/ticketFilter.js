@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import PropTypes from 'prop-types'
 
 import { toggleFilter, selectorFilter, allFilter } from '../../store/filterSlice'
 
@@ -14,7 +13,7 @@ export default function TicketFilter() {
   const filter = useSelector(selectorFilter)
   const { all, withoutTransfers, oneTransfers, twoTransfers, threeTransfers } = filter
 
-  const filtering = (item) => {
+  const filteringTickets = (item) => {
     if (item === 'all') {
       dispatch(allFilter(!all))
     }
@@ -38,7 +37,7 @@ export default function TicketFilter() {
           name={item}
           id={item}
           checked={filter[item]}
-          onChange={() => filtering(item)}
+          onChange={() => filteringTickets(item)}
         />
         <label className={styles.label} htmlFor={item}>
           {text[index]}

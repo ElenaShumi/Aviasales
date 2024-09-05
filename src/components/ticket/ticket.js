@@ -1,12 +1,10 @@
 import React from 'react'
 import { format, add } from 'date-fns'
-
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import styles from './ticket.module.scss'
 
 export default function Ticket({ ticket }) {
-  // console.log(ticket)
   const segments = ticket.segments.map((segment) => {
     return (
       <div key={segment.date} className={styles.info}>
@@ -45,4 +43,8 @@ export default function Ticket({ ticket }) {
       {segments}
     </li>
   )
+}
+
+Ticket.propTypes = {
+  ticket: PropTypes.object,
 }

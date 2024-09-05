@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleSorting, selectorSorting } from '../../store/sortingSlice'
 import { selectorTickets, sorting } from '../../store/ticketsSlice'
 
-// import PropTypes from 'prop-types'
-
 import './ticketTabs.scss'
 
 export default function TicketTabs() {

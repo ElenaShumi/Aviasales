@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-// import PropTypes from 'prop-types'
 import logo from '../../img/Logo.png'
 import TicketFilter from '../ticketFilter'
 import TicketTabs from '../ticketTabs'

@@ -5,9 +5,21 @@
     margin-top: 20px;
     margin-bottom: 20px;
 
+    h4 {
+        margin-top: 40px;
+        text-align: center;
+        width: 100%;
+        color: #4A4A4A;
+    }
+
     @media (max-width: 767px) {
         width: 100%;
         padding: 0;
+
+        h4 {
+            margin-top: 20px;
+            width: 342px;
+        }
     }
 }
 
@@ -42,4 +54,8 @@
         margin: 20px 0;
         width: 100% !important;
     }
+}
+
+.invisible {
+    display: none;
 }
